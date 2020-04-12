@@ -18,8 +18,9 @@ http.interceptors.request.use(function (config) {
   return Promise.reject(error);
 });
 http.interceptors.response.use(res => {
-  
-  return res
+  // if(res.code==200){   有些报错外面的http状态码仍然是200，code是500，所以，这种情况不会进入到第二个函数err里面
+    return res.data
+  // }
 }, err => {
   // console.log(err)
   if (err.response.data.code == '401') {

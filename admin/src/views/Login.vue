@@ -34,12 +34,12 @@ export default {
       const res = await this.$http.post('auth/login', {username:this.username,password:pwd})
       // sessionStorage.token = res.data.token
       
-      if(res.data.code==200){
+      if(res.code==200){
         this.$message({
           type: 'success',
           message: '登录成功'
         })
-        localStorage.setItem('token',res.data.data.token)
+        localStorage.setItem('token',res.data.token)
         this.$router.push('/')
       }else{
         this.$message({
