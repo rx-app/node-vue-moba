@@ -8,8 +8,9 @@ const http = axios.create({
 })
 http.interceptors.request.use(function (config) {
   // Do something before request is sent
-  if (localStorage.token) {
-    config.headers.Authorization = 'Bearer ' + localStorage.token
+  if (localStorage.getItem('token')) {
+    // config.headers.Authorization = 'Bearer ' + localStorage.token
+    config.headers.token =  localStorage.getItem('token')
   }
   return config;
 }, function (error) {
@@ -17,12 +18,31 @@ http.interceptors.request.use(function (config) {
   return Promise.reject(error);
 });
 http.interceptors.response.use(res => {
+  
   return res
 }, err => {
+  // console.log(err)
+  if (err.response.data.code == '401') {
+    Vue.prototype.$alert('身份信息无效或已过期，请重新登录', {
+      confirmButtonText: '确定',
+      callback: action => {
+        router.push('/login')
+        // Vue.prototype.$message({
+        //   type: 'error',
+        //   message: '身份信息无效或已过期，请重新登录'
+        // });
+      }
+    });
+    // Vue.prototype.$message({
+    //   type: 'error',
+    //   message: '身份信息过期或无效，请重新登录'
+    // })
+    return Promise.reject(err)
+  }
   if (err.response.data.message) {
     Vue.prototype.$message({
       type: 'error',
-      message: err.response.data.message
+      message: err.response.data.msg
     })
     
     if (err.response.status === 401) {

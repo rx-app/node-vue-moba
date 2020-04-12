@@ -1,9 +1,14 @@
 <template>
   <div>
+    <div>
+      <button class="add">添加</button>
+    </div>
     <h1>管理员列表</h1>
     <el-table :data="items">
       <el-table-column prop="_id" label="ID" width="240"></el-table-column>
       <el-table-column prop="username" label="用户名"></el-table-column>
+      <el-table-column prop="mobile" label="用户名"></el-table-column>
+      <el-table-column prop="email" label="用户名"></el-table-column>
       <el-table-column fixed="right" label="操作" width="180">
         <template slot-scope="scope">
           <el-button
@@ -27,8 +32,12 @@ export default {
   },
   methods: {
     async fetch() {
-      const res = await this.$http.get("rest/admin_users");
-      this.items = res.data;
+      const res = await this.$http.get("admin/page",{params:{page_index:1,page_size:10}});
+      console.log(res.data)
+      if(res.data.code==200){
+        this.items = res.data.data.result;
+      }
+      
     },
     remove(row) {
       this.$confirm(`是否确定要删除 "${row.name}"`, "提示", {
