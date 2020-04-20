@@ -1,6 +1,6 @@
 <template>
-  <div class="about">
-    <h1>{{id ? '编辑' : '新建'}}管理员</h1>
+  <div class="about card">
+    <h1 class="card-header">{{id ? '编辑' : '新建'}}管理员</h1>
     <el-form style="max-width:600px" label-width="120px" @submit.native.prevent="save">
       
       <el-form-item label="用户名">
@@ -16,7 +16,7 @@
         <el-input type="text" v-model="model.email"></el-input>
       </el-form-item>
       <el-form-item style="text-align:right">
-        <el-button type="primary" native-type="submit">保存</el-button>
+        <el-button type="primary" native-type="submit" class="myBtn" style="width: 100%;">确 定</el-button>
       </el-form-item>
     </el-form>
   </div>

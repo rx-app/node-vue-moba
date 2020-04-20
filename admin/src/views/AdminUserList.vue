@@ -1,43 +1,62 @@
 <template>
   <div>
     <div>
-      <el-button type="primary" class="add" @click="$router.push(`/admin_users/create/`)">添加</el-button>
+      <el-button type="primary" class="add myBtn" @click="$router.push(`/admin_users/create/`)"><i class="el-icon-s-custom"></i> 添加管理员</el-button>
     </div>
-    <h1>管理员列表</h1>
-    <el-table :data="items">
-      <el-table-column prop="id" label="ID" width="240"></el-table-column>
-      <el-table-column prop="username" label="用户名"></el-table-column>
-      <el-table-column prop="mobile" label="用户名"></el-table-column>
-      <el-table-column prop="email" label="用户名"></el-table-column>
-      <el-table-column fixed="right" label="操作" width="180">
-        <template slot-scope="scope">
-          <el-button
-            type="text"
-            size="small"
-            @click="$router.push(`/admin_users/edit/${scope.row.id}`)"
-          >编辑</el-button>
-          <el-button type="text" size="small" @click="remove(scope.row)">删除</el-button>
-        </template>
-      </el-table-column>
-    </el-table>
-    <!-- <el-pagination
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :current-page="currentPage"
-        :page-sizes="[3, 6, 9, 12]"
-        :page-size="3"
-        layout="total, sizes, prev, pager, next, jumper"
-        :total="total">
-      </el-pagination> -->
-      <el-pagination
-        layout="prev, pager, next"
-        :page-size="3"
-        @next-click="nextClick"
-        @prev-click="prevClick"
-        @size-change="handleSizeChange"
-        @current-change="handleCurrentChange"
-        :total="total">
-      </el-pagination>
+    <div class="card">
+      <h1 class="card-header">管理员列表</h1>
+      <el-table
+        :data="items"
+        stripe
+        border
+        :header-cell-style="{background:'#eee'}">
+        <el-table-column prop="id" label="ID" width="240"></el-table-column>
+        <el-table-column prop="username" label="用户名"></el-table-column>
+        <el-table-column prop="mobile" label="手机号"></el-table-column>
+        <el-table-column prop="email" label="邮箱"></el-table-column>
+        <el-table-column fixed="right" label="操作" width="180">
+          <template slot-scope="scope">
+              <el-button
+              size="mini"
+              @click="$router.push(`/admin_users/edit/${scope.row.id}`)">编辑</el-button>
+            <el-button
+              size="mini"
+              type="danger"
+              @click="remove(scope.row)">删除</el-button>
+            <!-- <el-button
+              type="text"
+              size="small"
+              @click="$router.push(`/admin_users/edit/${scope.row.id}`)"
+            ><i class="el-icon-edit" title="编辑"></i></el-button>
+            <el-button type="text" size="small" @click="remove(scope.row)"><i class="el-icon-delete" title="删除"></i></el-button> -->
+          </template>
+        </el-table-column>
+      </el-table>
+    
+      <!-- <el-pagination
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :current-page="currentPage"
+          :page-sizes="[3, 6, 9, 12]"
+          :page-size="3"
+          layout="total, sizes, prev, pager, next, jumper"
+          :total="total">
+        </el-pagination> -->
+
+    
+
+
+        <el-pagination
+          background
+          layout="prev, pager, next"
+          :page-size="pageSize"
+          @next-click="nextClick"
+          @prev-click="prevClick"
+          @size-change="handleSizeChange"
+          @current-change="handleCurrentChange"
+          :total="total">
+        </el-pagination>
+    </div>
   </div>
 </template>
 
@@ -46,7 +65,7 @@ export default {
   data() {
     return {
       items: [],
-      pageSize:3,
+      pageSize:8,
       total:0,
       pageIndex:1,
     };
