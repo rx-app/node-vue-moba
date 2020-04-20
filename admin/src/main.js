@@ -13,13 +13,14 @@ Vue.prototype.$http = http
 Vue.mixin({
   computed: {
     uploadUrl(){
-      return this.$http.defaults.baseURL + '/upload'
+      return this.$http.defaults.baseURL + '/storage/upload'
     }
   },
   methods: {
     getAuthHeaders(){
       return {
-        Authorization: `Bearer ${localStorage.token || ''}`
+        'token':localStorage.getItem('token')
+        // Authorization: `Bearer ${localStorage.token || ''}`
       }
     }
   }

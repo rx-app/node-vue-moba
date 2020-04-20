@@ -20,6 +20,11 @@ import AdList from './views/AdList.vue'
 import AdminUserEdit from './views/AdminUserEdit.vue'
 import AdminUserList from './views/AdminUserList.vue'
 
+import CardEdit from './views/CardEdit.vue'
+import CardList from './views/CardList.vue'
+
+import MessageEdit from './views/MessageEdit.vue'
+import MessageList from './views/MessageList.vue'
 
 Vue.use(Router)
 
@@ -31,6 +36,14 @@ const router = new Router({
       name: 'main',
       component: Main,
       children: [
+        { path: '/Card/create', component: CardEdit },
+        { path: '/Card/edit/:id', component: CardEdit, props: true },
+        { path: '/Card/list', component: CardList },
+
+        { path: '/Message/create', component: MessageEdit },
+        { path: '/Message/edit/:id', component: MessageEdit, props: true },
+        { path: '/Message/list', component: MessageList },
+
         { path: '/categories/create', component: CategoryEdit },
         { path: '/categories/edit/:id', component: CategoryEdit, props: true },
         { path: '/categories/list', component: CategoryList },
