@@ -21,12 +21,15 @@
           <i v-else class="el-icon-plus avatar-uploader-icon"></i>
         </el-upload>
       </el-form-item>
-      <el-form-item label="内容">
+      <!-- <el-form-item label="内容">
         <el-input type="text" v-model="model.content"></el-input>
-      </el-form-item>
+      </el-form-item> -->
       <!-- <el-form-item label="邮箱">
         <el-input type="text" v-model="model.email"></el-input>
       </el-form-item> -->
+      <el-form-item label="内容">
+        <vue-editor v-model="model.content" useCustomImageHandler @imageAdded="handleImageAdded"></vue-editor>
+      </el-form-item>
       <el-form-item style="text-align:right">
         <el-button type="primary" native-type="submit" class="myBtn" style="width: 100%;">确 定</el-button>
       </el-form-item>
@@ -35,10 +38,14 @@
 </template>
 
 <script>
+import { VueEditor } from "vue2-editor";
 import md5 from 'js-md5';
 export default {
   props: {
     id: {}
+  },
+  components: {
+    VueEditor
   },
   data(){
     return {
@@ -49,6 +56,14 @@ export default {
   methods: {
     afterUpload(res){
       this.$set(this.model, 'icon', res.data.url)
+    },
+    async handleImageAdded(file, Editor, cursorLocation, resetUploader) {
+      debugger
+      const formData = new FormData();
+      formData.append("file", file);
+      const res = await this.$http.post("/storage/upload", formData);
+      Editor.insertEmbed(cursorLocation, "image", res.data.url);
+      resetUploader();
     },
     async save(){
       let res

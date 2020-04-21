@@ -73,8 +73,8 @@
             <el-dropdown-item>删除</el-dropdown-item>
           </el-dropdown-menu>
         </el-dropdown -->
-        <span>当前用户 [王小虎]</span>
-        <span><i class="el-icon-switch-button"></i> 注销</span>
+        <span>当前用户 [{{name}}}]</span>
+        <span @click="logout"><i class="el-icon-switch-button"></i> 注销</span>
       </el-header>
 
       <el-main>
@@ -104,12 +104,37 @@ export default {
   data() {
     const item = {
       date: "2016-05-02",
-      name: "王小虎",
+      // name: "王小虎",
       address: "上海市普陀区金沙江路 1518 弄"
     };
     return {
       tableData: Array(20).fill(item)
     };
-  }
+  },
+  computed:{
+    name(){
+      return localStorage.getItem('name')
+    }
+  },
+  methods:{
+    logout(){
+      this.$confirm(`确定要退出登录？`, "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      }).then(async () => {
+        localStorage.removeItem('token');
+          this.$alert('身份信息无效或已过期，请重新登录', {
+          confirmButtonText: '确定',
+          callback: action => {
+            this.$router.push('/login')
+            
+          }
+        });
+      });
+      
+      // router.push('/login');
+    },
+  },
 };
 </script>

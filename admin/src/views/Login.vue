@@ -92,6 +92,7 @@ export default {
           message: '登录成功'
         })
         localStorage.setItem('token',res.data.token)
+        localStorage.setItem('name',this.username)
         this.$router.push('/')
       }else{
         this.$message({
