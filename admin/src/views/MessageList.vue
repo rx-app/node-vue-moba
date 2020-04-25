@@ -97,7 +97,7 @@ export default {
         params: {
           page_index: this.pageIndex,
           page_size: this.pageSize,
-          status: this.status,
+          // status: this.status,
         }
       });
       console.log(res.data);
